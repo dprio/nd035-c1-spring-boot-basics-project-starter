@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -14,6 +15,14 @@ import java.util.Base64;
 @Component
 public class HashService {
     private Logger logger = LoggerFactory.getLogger(HashService.class);
+
+    public String generateSalt(){
+        final SecureRandom secureRandom = new SecureRandom();
+        final byte[] salt = new byte[16];
+        secureRandom.nextBytes(salt);
+
+        return new String(salt);
+    }
 
     public String getHashedValue(String data, String salt) {
         byte[] hashedValue = null;

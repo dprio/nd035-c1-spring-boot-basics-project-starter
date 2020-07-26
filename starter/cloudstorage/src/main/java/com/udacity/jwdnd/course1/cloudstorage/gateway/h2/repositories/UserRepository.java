@@ -15,7 +15,7 @@ public interface UserRepository {
     @Select("SELECT * FROM USERS WHERE username = #{userName}")
     User findUserByUserName(String userName);
 
-    @Insert("INSERT INTO USERS (usernam, salt, password, firstname, lastname) " +
+    @Insert("INSERT INTO USERS (username, salt, password, firstname, lastname) " +
             "VALUES (#{userName}, #{salt}, #{password}, #{firstName}, #{lastName})")
     @Options(useGeneratedKeys = true, keyProperty = "userId")
     int insertUser(User user);

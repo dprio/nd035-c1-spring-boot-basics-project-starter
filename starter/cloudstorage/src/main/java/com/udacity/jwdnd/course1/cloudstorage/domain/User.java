@@ -41,4 +41,12 @@ public class User {
     public String getLastName() {
         return lastName;
     }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
