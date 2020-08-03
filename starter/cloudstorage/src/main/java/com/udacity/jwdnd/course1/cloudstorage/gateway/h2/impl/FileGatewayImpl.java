@@ -6,6 +6,7 @@ import com.udacity.jwdnd.course1.cloudstorage.gateway.h2.repositories.FileReposi
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FileGatewayImpl implements FileGateway {
@@ -19,6 +20,11 @@ public class FileGatewayImpl implements FileGateway {
     @Override
     public List<File> findFilesByUserId(final int userId) {
         return fileRepository.findFilesByUserId(userId);
+    }
+
+    @Override
+    public Optional<File> findFileByUserIdAndFileName(final int userId, final String fileName) {
+        return Optional.ofNullable(fileRepository.findFileByUserIdAndName(userId, fileName));
     }
 
     @Override
