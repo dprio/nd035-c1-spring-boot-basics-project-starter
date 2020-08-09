@@ -5,13 +5,13 @@ public class Note {
     private Integer noteId;
     private String noteTitle;
     private String noteDescription;
-    private Integer userID;
+    private Integer userId;
 
-    public Note(Integer noteId, String noteTitle, String noteDescription, Integer userID) {
+    public Note(Integer noteId, String noteTitle, String noteDescription, Integer userId) {
         this.noteId = noteId;
         this.noteTitle = noteTitle;
         this.noteDescription = noteDescription;
-        this.userID = userID;
+        this.userId = userId;
     }
 
     public Integer getNoteId() {
@@ -26,7 +26,7 @@ public class Note {
         return noteDescription;
     }
 
-    public Integer getUserID() {
-        return userID;
+    public Integer getUserId() {
+        return userId;
     }
 }

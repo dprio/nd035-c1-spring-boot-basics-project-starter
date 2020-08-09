@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.script.ScriptEngine;
 import java.util.List;
 
 @Controller
@@ -66,14 +65,17 @@ public class HomeController {
         return "home";
     }
 
-    @PostMapping(
-            value = "notes/create",
-            consumes = MediaType.APPLICATION_JSON_VALUE
-    )
-    public String crateNote(final Authentication authentication, final NoteRequest noteRequest){
+    @PostMapping(value = "/notes/create")
+    public String crateNote(final Authentication authentication, final NoteRequest noteRequest, final Model model){
         final String userName = authentication.getPrincipal().toString();
 
-        createNoteService.execute(noteRequest.toNoteDomain(), userName);
+        try {
+            createNoteService.execute(noteRequest.toNoteDomain(), userName);
+            model.addAttribute("noteSuccess", true);
+        } catch (final Exception ex){
+            model.addAttribute("noteError", true);
+            model.addAttribute("noteErrorMessage", ex.getMessage());
+        }
 
         return "home";
     }
