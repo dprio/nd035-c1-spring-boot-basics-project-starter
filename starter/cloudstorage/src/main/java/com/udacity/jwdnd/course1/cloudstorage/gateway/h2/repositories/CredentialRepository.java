@@ -10,7 +10,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface CredencialRepository {
+public interface CredentialRepository {
 
     @Select("SELECT * FROM CREDENTIALS WHERE userId = #{userId}")
     List<Credential> findCredentialsByUserId(int userId);

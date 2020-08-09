@@ -1,12 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.gateway.controller;
 
+import com.udacity.jwdnd.course1.cloudstorage.domain.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.domain.File;
 import com.udacity.jwdnd.course1.cloudstorage.domain.Note;
+import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.CredentialRequest;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.NoteRequest;
-import com.udacity.jwdnd.course1.cloudstorage.services.CreateNoteService;
-import com.udacity.jwdnd.course1.cloudstorage.services.FindFilesService;
-import com.udacity.jwdnd.course1.cloudstorage.services.FindNotesService;
-import com.udacity.jwdnd.course1.cloudstorage.services.UploadFileService;
+import com.udacity.jwdnd.course1.cloudstorage.services.*;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -26,12 +25,16 @@ public class HomeController {
     private final FindFilesService findFilesService;
     private final FindNotesService findNotesService;
     private final CreateNoteService createNoteService;
+    private final FindCredentialsService findCredentialsService;
+    private final CreateCredentialService createCredentialService;
 
-    public HomeController(UploadFileService uploadFileService, FindFilesService findFilesService, FindNotesService findNotesService, CreateNoteService createNoteService) {
+    public HomeController(UploadFileService uploadFileService, FindFilesService findFilesService, FindNotesService findNotesService, CreateNoteService createNoteService, FindCredentialsService findCredentialsService, CreateCredentialService createCredentialService) {
         this.uploadFileService = uploadFileService;
         this.findFilesService = findFilesService;
         this.findNotesService = findNotesService;
         this.createNoteService = createNoteService;
+        this.findCredentialsService = findCredentialsService;
+        this.createCredentialService = createCredentialService;
     }
 
     @GetMapping
@@ -43,6 +46,9 @@ public class HomeController {
 
         final List<Note> notes = findNotesService.execute(userName);
         model.addAttribute("notes", notes);
+
+        final List<Credential> credentials = findCredentialsService.execute(userName);
+        model.addAttribute("credentials", credentials);
 
         return "home";
     }
@@ -75,6 +81,21 @@ public class HomeController {
         } catch (final Exception ex){
             model.addAttribute("noteError", true);
             model.addAttribute("noteErrorMessage", ex.getMessage());
+        }
+
+        return "home";
+    }
+
+    @PostMapping(value = "/credentials/create")
+    public String createCredential(final Authentication authentication, final CredentialRequest credentialRequest, final Model model){
+        final String userName = authentication.getPrincipal().toString();
+
+        try {
+            createCredentialService.execute(credentialRequest.toCredentialDomain(), userName);
+            model.addAttribute("credentialsSuccess", true);
+        } catch (final Exception ex){
+            model.addAttribute("credentialError", true);
+            model.addAttribute("credentialsErrorMessage", ex.getMessage());
         }
 
         return "home";
