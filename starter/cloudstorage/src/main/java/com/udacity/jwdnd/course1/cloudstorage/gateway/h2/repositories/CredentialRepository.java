@@ -16,7 +16,7 @@ public interface CredentialRepository {
     List<Credential> findCredentialsByUserId(int userId);
 
     @Insert("INSERT INTO CREDENTIALS (url, username, key, password, userid)" +
-            "VALUES (#{url}, #{userName}, #{key}, #{password}, #{userId)")
+            "VALUES (#{url}, #{userName}, #{key}, #{password}, #{userId})")
     int insertCredential(Credential credential);
 
 }

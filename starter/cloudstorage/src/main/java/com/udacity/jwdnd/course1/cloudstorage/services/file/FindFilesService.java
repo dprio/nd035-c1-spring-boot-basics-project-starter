@@ -1,4 +1,4 @@
-package com.udacity.jwdnd.course1.cloudstorage.services;
+package com.udacity.jwdnd.course1.cloudstorage.services.file;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.File;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.h2.FileGateway;

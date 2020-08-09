@@ -5,12 +5,12 @@ import com.udacity.jwdnd.course1.cloudstorage.domain.Credential;
 public class CredentialRequest {
 
     private String url;
-    private String userName;
+    private String username;
     private String password;
 
-    public CredentialRequest(String url, String userName, String password) {
+    public CredentialRequest(String url, String username, String password) {
         this.url = url;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
     }
 
@@ -18,10 +18,22 @@ public class CredentialRequest {
         return new Credential(
                 null,
                 this.url,
-                this.userName,
+                this.username,
                 null,
                 this.password,
                 null
         );
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

@@ -5,7 +5,12 @@ import com.udacity.jwdnd.course1.cloudstorage.domain.File;
 import com.udacity.jwdnd.course1.cloudstorage.domain.Note;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.CredentialRequest;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.NoteRequest;
-import com.udacity.jwdnd.course1.cloudstorage.services.*;
+import com.udacity.jwdnd.course1.cloudstorage.services.credential.CreateCredentialService;
+import com.udacity.jwdnd.course1.cloudstorage.services.credential.FindCredentialsService;
+import com.udacity.jwdnd.course1.cloudstorage.services.file.FindFilesService;
+import com.udacity.jwdnd.course1.cloudstorage.services.file.UploadFileService;
+import com.udacity.jwdnd.course1.cloudstorage.services.note.CreateNoteService;
+import com.udacity.jwdnd.course1.cloudstorage.services.note.FindNotesService;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -94,7 +99,7 @@ public class HomeController {
             createCredentialService.execute(credentialRequest.toCredentialDomain(), userName);
             model.addAttribute("credentialsSuccess", true);
         } catch (final Exception ex){
-            model.addAttribute("credentialError", true);
+                model.addAttribute("credentialError", true);
             model.addAttribute("credentialsErrorMessage", ex.getMessage());
         }
 
