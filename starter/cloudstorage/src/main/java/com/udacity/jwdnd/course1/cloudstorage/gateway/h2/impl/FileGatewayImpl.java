@@ -28,6 +28,11 @@ public class FileGatewayImpl implements FileGateway {
     }
 
     @Override
+    public Optional<File> findFileById(int fileId) {
+        return Optional.ofNullable(fileRepository.findFileById(fileId));
+    }
+
+    @Override
     public int insertFile(final File file) {
         return fileRepository.insertFile(file);
     }

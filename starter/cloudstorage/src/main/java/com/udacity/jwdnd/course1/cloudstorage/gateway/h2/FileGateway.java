@@ -11,5 +11,7 @@ public interface FileGateway {
 
     Optional<File> findFileByUserIdAndFileName(int userId, String fileName);
 
+    Optional<File> findFileById(int fileId);
+
     int insertFile(File file);
 }

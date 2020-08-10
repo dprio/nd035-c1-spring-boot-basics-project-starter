@@ -18,7 +18,7 @@
             <form action="#" method="POST" th:action="@{/signup}">
                 <div class="alert alert-dark" th:if="${signupSuccess}">
                     You successfully signed up!
-                    <meta http-equiv="refresh" content="1; @{/login}" />
+                    <meta http-equiv="refresh" content="1; URL= 'http://localhost:8080/login'" />
                 </div>
                 <div class="alert alert-danger" th:if="${signupError}">
                     <span>Example Signup Error Message</span>

@@ -19,6 +19,9 @@ public interface FileRepository {
     @Select("SELECT * FROM FILES WHERE userId = #{userId} AND fileName = #{fileName}")
     File findFileByUserIdAndName(int userId, String fileName);
 
+    @Select("SELECT * FROM FILES WHERE fileId = #{fileId}")
+    File findFileById(int fileId);
+
     @Insert("INSERT INTO FILES (filename, contenttype, filesize, userid, filedata) " +
             "VALUES (#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")

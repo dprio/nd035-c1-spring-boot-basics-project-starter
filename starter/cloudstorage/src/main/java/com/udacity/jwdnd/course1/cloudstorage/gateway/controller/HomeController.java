@@ -58,23 +58,7 @@ public class HomeController {
         return "home";
     }
 
-    @PostMapping(
-            value = "/file/upload",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
-    )
-    public String uploadFile(final Authentication authentication, final MultipartFile fileUpload, final Model model){
-        final String userName = authentication.getPrincipal().toString();
 
-        try {
-            uploadFileService.execute(fileUpload, userName);
-            model.addAttribute("fileSuccess", true);
-        }catch (final Exception exception){
-            model.addAttribute("fileError", true);
-            model.addAttribute("fileErrorMessage", exception.getMessage());
-        }
-
-        return "home";
-    }
 
     @PostMapping(value = "/notes/create")
     public String crateNote(final Authentication authentication, final NoteRequest noteRequest, final Model model){
@@ -103,6 +87,6 @@ public class HomeController {
             model.addAttribute("credentialsErrorMessage", ex.getMessage());
         }
 
-        return "home";
+        return "redirect:/home";
     }
 }
