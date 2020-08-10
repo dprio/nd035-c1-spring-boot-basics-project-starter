@@ -14,4 +14,6 @@ public interface FileGateway {
     Optional<File> findFileById(int fileId);
 
     int insertFile(File file);
+
+    void deleteFileById(int fileId);
 }

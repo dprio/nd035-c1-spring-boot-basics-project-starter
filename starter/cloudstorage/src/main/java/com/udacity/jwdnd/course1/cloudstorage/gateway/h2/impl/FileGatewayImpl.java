@@ -36,4 +36,9 @@ public class FileGatewayImpl implements FileGateway {
     public int insertFile(final File file) {
         return fileRepository.insertFile(file);
     }
+
+    @Override
+    public void deleteFileById(int fileId) {
+        fileRepository.deleteFile(fileId);
+    }
 }

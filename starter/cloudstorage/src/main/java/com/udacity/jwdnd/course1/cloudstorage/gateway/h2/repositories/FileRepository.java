@@ -1,10 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.gateway.h2.repositories;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.File;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,4 +23,7 @@ public interface FileRepository {
             "VALUES (#{fileName}, #{contentType}, #{fileSize}, #{userId}, #{fileData})")
     @Options(useGeneratedKeys = true, keyProperty = "fileId")
     int insertFile(File file);
+
+    @Delete("DELETE FROM FILES WHERE fileId = #{fileId}")
+    void deleteFile(final int fileId);
 }

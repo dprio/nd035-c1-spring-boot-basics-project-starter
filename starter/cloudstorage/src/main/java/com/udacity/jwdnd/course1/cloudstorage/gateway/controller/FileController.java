@@ -1,6 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.gateway.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.File;
+import com.udacity.jwdnd.course1.cloudstorage.services.file.DeleteFileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.DownloadFileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.FindFilesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.UploadFileService;
@@ -12,10 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -29,11 +27,13 @@ public class FileController {
     private final UploadFileService uploadFileService;
     private final FindFilesService findFilesService;
     private final DownloadFileService downloadFileService;
+    private final DeleteFileService deleteFileService;
 
-    public FileController(UploadFileService uploadFileService, FindFilesService findFilesService, DownloadFileService downloadFileService) {
+    public FileController(UploadFileService uploadFileService, FindFilesService findFilesService, DownloadFileService downloadFileService, DeleteFileService deleteFileService) {
         this.uploadFileService = uploadFileService;
         this.findFilesService = findFilesService;
         this.downloadFileService = downloadFileService;
+        this.deleteFileService = deleteFileService;
     }
 
     @PostMapping(
@@ -75,5 +75,11 @@ public class FileController {
                 .contentType(MediaType.valueOf(file.getContentType()))
                 .contentLength(Long.parseLong(file.getFileSize()))
                 .body(resource);
+    }
+
+    @GetMapping(value = "/{fileId}/delete")//DeleteMapping
+    public String deleteFile(@PathVariable("fileId") final Integer fileId){
+        deleteFileService.execute(fileId);
+        return "redirect:/home";
     }
 }
