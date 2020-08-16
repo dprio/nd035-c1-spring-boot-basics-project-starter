@@ -25,4 +25,9 @@ public class CredentialGatewayImpl implements CredentialGateway {
     public int insertCredential(final Credential credential) {
         return credentialRepository.insertCredential(credential);
     }
+
+    @Override
+    public void updateCredential(final Credential credential) {
+        credentialRepository.updateCredential(credential);
+    }
 }

@@ -9,4 +9,6 @@ public interface CredentialGateway {
     List<Credential> findCredentialsByUserId(int userId);
 
     int insertCredential(Credential credential);
+
+    void updateCredential(Credential credential);
 }
