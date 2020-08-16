@@ -11,4 +11,6 @@ public interface CredentialGateway {
     int insertCredential(Credential credential);
 
     void updateCredential(Credential credential);
+
+    void deleteCredential(int credentialId, int userId);
 }

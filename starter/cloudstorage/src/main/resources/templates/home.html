@@ -156,11 +156,10 @@
                                                     this.getAttribute('credentialId'),
                                                     this.getAttribute('url'),
                                                     this.getAttribute('credentialUsername'),
-                                                    this.getAttribute('credentialPasword'))"
-                                        >
-                                                Edit
+                                                    this.getAttribute('credentialPasword'))">
+                                            Edit
                                         </button>
-                                        <a class="btn btn-danger">Delete</a>
+                                        <a class="btn btn-danger" th:href="@{|/credentials/${credential.credentialId}/delete|}">Delete</a>
                                     </td>
                                     <th scope="row" th:text="${credential.url}">Example Credential URL</th>
                                     <td th:text="${credential.username}">Example Credential Username</td>

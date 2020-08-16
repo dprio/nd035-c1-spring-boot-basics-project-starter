@@ -30,4 +30,9 @@ public class CredentialGatewayImpl implements CredentialGateway {
     public void updateCredential(final Credential credential) {
         credentialRepository.updateCredential(credential);
     }
+
+    @Override
+    public void deleteCredential(int credentialId, int userId) {
+        credentialRepository.deleteCredential(credentialId, userId);
+    }
 }

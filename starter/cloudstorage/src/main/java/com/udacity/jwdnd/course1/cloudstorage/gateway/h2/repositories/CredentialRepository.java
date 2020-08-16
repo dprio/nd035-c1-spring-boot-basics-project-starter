@@ -1,10 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.gateway.h2.repositories;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.Credential;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +20,8 @@ public interface CredentialRepository {
     @Update("UPDATE CREDENTIALS SET url = #{url}, username = #{userName}, key = #{key}, password = #{password}" +
             "WHERE  credentialid = #{credentialId} AND userid = #{userId} ")
     void updateCredential(Credential credential);
+
+    @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialId} AND userId = #{userId}")
+    void deleteCredential(int noteId, int userId);
 
 }
