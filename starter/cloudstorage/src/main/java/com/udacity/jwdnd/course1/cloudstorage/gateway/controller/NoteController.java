@@ -3,12 +3,14 @@ package com.udacity.jwdnd.course1.cloudstorage.gateway.controller;
 import com.udacity.jwdnd.course1.cloudstorage.domain.Note;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.NoteRequest;
 import com.udacity.jwdnd.course1.cloudstorage.services.note.CreateNoteService;
+import com.udacity.jwdnd.course1.cloudstorage.services.note.DeleteNoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.note.FindNotesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.note.UpdateNoteService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -22,11 +24,13 @@ public class NoteController {
     private final CreateNoteService createNoteService;
     private final FindNotesService findNotesService;
     private final UpdateNoteService updateNoteService;
+    private final DeleteNoteService deleteNoteService;
 
-    public NoteController(CreateNoteService createNoteService, FindNotesService findNotesService, UpdateNoteService updateNoteService) {
+    public NoteController(CreateNoteService createNoteService, FindNotesService findNotesService, UpdateNoteService updateNoteService, DeleteNoteService deleteNoteService) {
         this.createNoteService = createNoteService;
         this.findNotesService = findNotesService;
         this.updateNoteService = updateNoteService;
+        this.deleteNoteService = deleteNoteService;
     }
 
     @PostMapping(value = "/create")
@@ -55,6 +59,14 @@ public class NoteController {
         final List<Note> notes = findNotesService.execute(userName);
         model.addAttribute("notes", notes);
 
+        return "redirect:/home";
+    }
+
+    @RequestMapping(value = "/{noteId}/delete")
+    public String deleteNote(final Authentication authentication, final @PathVariable("noteId") int noteId){
+        final String userName = authentication.getPrincipal().toString();
+
+        deleteNoteService.execute(noteId, userName);
         return "redirect:/home";
     }
 }

@@ -30,4 +30,9 @@ public class NoteGatewayImpl implements NoteGateway {
     public void updateNote(final Note note) {
         noteRepository.updateNote(note);
     }
+
+    @Override
+    public void deleteNote(final int noteId, final int userId) {
+        noteRepository.deleteNote(noteId, userId);
+    }
 }

@@ -11,4 +11,6 @@ public interface NoteGateway {
     int insertNote(Note note);
 
     void updateNote(Note note);
+
+    void deleteNote(int noteId, int userId);
 }

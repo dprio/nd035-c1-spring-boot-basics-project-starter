@@ -22,4 +22,7 @@ public interface NoteRepository {
             "WHERE noteid = #{noteId} and userid = #{userId}")
     void updateNote(Note note);
 
+    @Delete("DELETE FROM NOTES WHERE noteid = #{noteId} AND userId = #{userId}")
+    void deleteNote(int noteId, int userId);
+
 }
