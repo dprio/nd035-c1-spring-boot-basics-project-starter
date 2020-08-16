@@ -3,6 +3,7 @@ package com.udacity.jwdnd.course1.cloudstorage.gateway.controller;
 import com.udacity.jwdnd.course1.cloudstorage.domain.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.domain.File;
 import com.udacity.jwdnd.course1.cloudstorage.domain.Note;
+import com.udacity.jwdnd.course1.cloudstorage.gateway.CredentialRequestConverter;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.CredentialRequest;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.CreateCredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.FindCredentialsService;
@@ -26,11 +27,14 @@ public class HomeController {
     private final FindCredentialsService findCredentialsService;
     private final CreateCredentialService createCredentialService;
 
-    public HomeController(FindFilesService findFilesService, FindNotesService findNotesService, FindCredentialsService findCredentialsService, CreateCredentialService createCredentialService) {
+    private final CredentialRequestConverter credentialRequestConverter;
+
+    public HomeController(FindFilesService findFilesService, FindNotesService findNotesService, FindCredentialsService findCredentialsService, CreateCredentialService createCredentialService, CredentialRequestConverter credentialRequestConverter) {
         this.findFilesService = findFilesService;
         this.findNotesService = findNotesService;
         this.findCredentialsService = findCredentialsService;
         this.createCredentialService = createCredentialService;
+        this.credentialRequestConverter = credentialRequestConverter;
     }
 
     @GetMapping
@@ -43,15 +47,11 @@ public class HomeController {
         final List<Note> notes = findNotesService.execute(userName);
         model.addAttribute("notes", notes);
 
-        final List<Credential> credentials = findCredentialsService.execute(userName);
-        model.addAttribute("credentials", credentials);
+        final List<CredentialRequest> credentialList = credentialRequestConverter.convert(findCredentialsService.execute(userName));
+        model.addAttribute("credentialList", credentialList);
 
         return "home";
     }
-
-
-
-
 
     @PostMapping(value = "/credentials/create")
     public String createCredential(final Authentication authentication, final CredentialRequest credentialRequest, final Model model){

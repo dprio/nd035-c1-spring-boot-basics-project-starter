@@ -2,19 +2,33 @@ package com.udacity.jwdnd.course1.cloudstorage.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.*;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 @Service
 public class EncryptionService {
     private Logger logger = LoggerFactory.getLogger(EncryptionService.class);
+
+    public String generateKey(){
+       try {
+           final KeyGenerator keyGen = KeyGenerator.getInstance("AES");
+           final SecureRandom secureRandom = new SecureRandom();
+           keyGen.init(secureRandom);
+           final Key key = keyGen.generateKey();
+           return Base64.getEncoder().encodeToString(key.getEncoded());
+       }catch (final Exception ex){
+           logger.error("Unable to generate key");
+           return null;
+       }
+    }
 
     public String encryptValue(String data, String key) {
         byte[] encryptedValue = null;
