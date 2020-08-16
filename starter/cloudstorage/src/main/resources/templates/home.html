@@ -82,7 +82,13 @@
                                 <tbody>
                                     <tr th:each="note : ${notes}">
                                         <td>
-                                            <button type="button" class="btn btn-success">Edit</button>
+                                            <button type="button" class="btn btn-success"
+                                                    th:noteId="${note.noteId}"
+                                                    th:noteTitle="${note.noteTitle}"
+                                                    th:noteDescription="${note.noteDescription}"
+                                                    onclick="showNoteModal(this.getAttribute('noteId'), this.getAttribute('noteTitle'),  this.getAttribute('noteDescription'))">
+                                                Edit
+                                            </button>
                                             <a class="btn btn-danger">Delete</a>
                                         </td>
                                         <th scope="row" th:text="${note.noteTitle}">Example Note Title</th>
@@ -102,7 +108,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" enctype="" method="POST" th:action="@{/home/notes/create}">
+                                        <form action="#" enctype="" method="POST" th:action="@{/notes/create}">
                                             <input type="hidden" name="noteId" id="note-id">
                                             <div class="form-group">
                                                 <label for="note-title" class="col-form-label">Title</label>
@@ -114,7 +120,6 @@
                                             </div>
                                             <button id="noteSubmit" type="submit" class="d-none"></button>
                                         </form>
-                                        <meta th:if="${noteError} or ${noteSuccess}" http-equiv="refresh" content="0; URL = 'http://localhost:8080/home'">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

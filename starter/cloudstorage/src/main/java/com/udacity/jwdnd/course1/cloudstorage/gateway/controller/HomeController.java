@@ -4,21 +4,16 @@ import com.udacity.jwdnd.course1.cloudstorage.domain.Credential;
 import com.udacity.jwdnd.course1.cloudstorage.domain.File;
 import com.udacity.jwdnd.course1.cloudstorage.domain.Note;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.CredentialRequest;
-import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.NoteRequest;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.CreateCredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.FindCredentialsService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.FindFilesService;
-import com.udacity.jwdnd.course1.cloudstorage.services.file.UploadFileService;
-import com.udacity.jwdnd.course1.cloudstorage.services.note.CreateNoteService;
 import com.udacity.jwdnd.course1.cloudstorage.services.note.FindNotesService;
-import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,18 +21,14 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final UploadFileService uploadFileService;
     private final FindFilesService findFilesService;
     private final FindNotesService findNotesService;
-    private final CreateNoteService createNoteService;
     private final FindCredentialsService findCredentialsService;
     private final CreateCredentialService createCredentialService;
 
-    public HomeController(UploadFileService uploadFileService, FindFilesService findFilesService, FindNotesService findNotesService, CreateNoteService createNoteService, FindCredentialsService findCredentialsService, CreateCredentialService createCredentialService) {
-        this.uploadFileService = uploadFileService;
+    public HomeController(FindFilesService findFilesService, FindNotesService findNotesService, FindCredentialsService findCredentialsService, CreateCredentialService createCredentialService) {
         this.findFilesService = findFilesService;
         this.findNotesService = findNotesService;
-        this.createNoteService = createNoteService;
         this.findCredentialsService = findCredentialsService;
         this.createCredentialService = createCredentialService;
     }
@@ -60,20 +51,7 @@ public class HomeController {
 
 
 
-    @PostMapping(value = "/notes/create")
-    public String crateNote(final Authentication authentication, final NoteRequest noteRequest, final Model model){
-        final String userName = authentication.getPrincipal().toString();
 
-        try {
-            createNoteService.execute(noteRequest.toNoteDomain(), userName);
-            model.addAttribute("noteSuccess", true);
-        } catch (final Exception ex){
-            model.addAttribute("noteError", true);
-            model.addAttribute("noteErrorMessage", ex.getMessage());
-        }
-
-        return "home";
-    }
 
     @PostMapping(value = "/credentials/create")
     public String createCredential(final Authentication authentication, final CredentialRequest credentialRequest, final Model model){

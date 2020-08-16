@@ -12,17 +12,22 @@ public class NoteGatewayImpl implements NoteGateway {
 
     private final NoteRepository noteRepository;
 
-    public NoteGatewayImpl(NoteRepository noteRepository) {
+    public NoteGatewayImpl(final NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
     @Override
-    public List<Note> findNotesByUserId(int userId) {
+    public List<Note> findNotesByUserId(final int userId) {
         return noteRepository.findNotesByUserId(userId);
     }
 
     @Override
-    public int insertNote(Note note) {
+    public int insertNote(final Note note) {
         return noteRepository.insertNote(note);
+    }
+
+    @Override
+    public void updateNote(final Note note) {
+        noteRepository.updateNote(note);
     }
 }

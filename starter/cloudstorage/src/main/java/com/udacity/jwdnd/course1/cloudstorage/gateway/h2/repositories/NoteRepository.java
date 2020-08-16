@@ -1,10 +1,7 @@
 package com.udacity.jwdnd.course1.cloudstorage.gateway.h2.repositories;
 
 import com.udacity.jwdnd.course1.cloudstorage.domain.Note;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,4 +17,9 @@ public interface NoteRepository {
             "VALUES (#{noteTitle}, #{noteDescription}, #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "noteId")
     int insertNote(Note note);
+
+    @Update("UPDATE NOTES SET notetitle = #{noteTitle}, notedescription = #{noteDescription} " +
+            "WHERE noteid = #{noteId} and userid = #{userId}")
+    void updateNote(Note note);
+
 }

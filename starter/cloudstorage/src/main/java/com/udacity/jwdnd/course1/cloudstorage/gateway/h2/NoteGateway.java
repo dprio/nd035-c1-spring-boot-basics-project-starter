@@ -9,4 +9,6 @@ public interface NoteGateway {
     List<Note> findNotesByUserId(int userId);
 
     int insertNote(Note note);
+
+    void updateNote(Note note);
 }
