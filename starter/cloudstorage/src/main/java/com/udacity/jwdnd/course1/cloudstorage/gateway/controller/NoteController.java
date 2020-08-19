@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class NoteController {
     }
 
     @PostMapping(value = "/create")
-    public String crateNote(final Authentication authentication, final NoteRequest noteRequest, final Model model){
+    public ModelAndView crateNote(final Authentication authentication, final NoteRequest noteRequest){
         final String userName = authentication.getPrincipal().toString();
 
         try {
@@ -43,13 +44,10 @@ public class NoteController {
             }else{
                 updateNoteService.execute(noteRequest.toNoteDomain(), userName);
             }
-            model.addAttribute("noteSuccess", true);
+            return new ModelAndView("redirect:/home");
         } catch (final Exception ex){
-            model.addAttribute("noteError", true);
-            model.addAttribute("noteErrorMessage", ex.getMessage());
+            return new ModelAndView("redirect:/home?errorMessage=" + ex.getMessage());
         }
-
-        return "redirect:/home";
     }
 
     @GetMapping

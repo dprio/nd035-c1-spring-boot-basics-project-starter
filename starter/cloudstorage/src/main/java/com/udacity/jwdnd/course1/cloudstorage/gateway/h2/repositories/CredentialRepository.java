@@ -21,7 +21,7 @@ public interface CredentialRepository {
             "WHERE  credentialid = #{credentialId} AND userid = #{userId} ")
     void updateCredential(Credential credential);
 
-    @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialId} AND userId = #{userId}")
-    void deleteCredential(int noteId, int userId);
+    @Delete("DELETE FROM CREDENTIALS WHERE credentialid = #{credentialId} AND userid = #{userId}")
+    void deleteCredential(int credentialId, int userId);
 
 }

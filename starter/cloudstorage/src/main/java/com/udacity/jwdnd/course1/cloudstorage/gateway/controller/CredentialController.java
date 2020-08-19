@@ -6,11 +6,11 @@ import com.udacity.jwdnd.course1.cloudstorage.services.credential.DeleteCredenti
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.UpdateCredentialService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Objects;
 
@@ -29,29 +29,26 @@ public class CredentialController {
     }
 
     @PostMapping(value = "/create")
-    public String createCredential(final Authentication authentication, final CredentialRequest credentialRequest, final Model model){
+    public ModelAndView createCredential(final Authentication authentication, final CredentialRequest credentialRequest){
         final String userName = authentication.getPrincipal().toString();
-
         try {
             if(Objects.isNull(credentialRequest.getCredentialId())) {
                 createCredentialService.execute(credentialRequest.toCredentialDomain(), userName);
             }else {
                 updateCredentialService.execute(credentialRequest.toCredentialDomain(), userName);
             }
-            model.addAttribute("credentialsSuccess", true);
+            return new ModelAndView("redirect:/home");
         } catch (final Exception ex){
-            model.addAttribute("credentialError", true);
-            model.addAttribute("credentialsErrorMessage", ex.getMessage());
+            return new ModelAndView("redirect:/home?errorMessage="+ex.getMessage());
         }
-
-        return "redirect:/home";
     }
 
-    @RequestMapping(value = "/{credentialId}/delete}")
+    @RequestMapping(value = "/{credentialId}/delete")
     public String deleteCredential(final Authentication authentication, final @PathVariable("credentialId") int credentialId){
-        final String username = authentication.getPrincipal().toString();
+        final String userName = authentication.getPrincipal().toString();
 
-        deleteCredentialService.execute(credentialId, username);
+        deleteCredentialService.execute(credentialId, userName);
+
         return "redirect:/home";
     }
 

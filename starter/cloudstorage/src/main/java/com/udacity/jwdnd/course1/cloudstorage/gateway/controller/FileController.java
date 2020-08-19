@@ -13,8 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -40,18 +44,15 @@ public class FileController {
             value = "/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public String uploadFile(final Authentication authentication, final MultipartFile fileUpload, final Model model){
+    public ModelAndView uploadFile(final Authentication authentication, final MultipartFile fileUpload){
         final String userName = authentication.getPrincipal().toString();
 
         try {
             uploadFileService.execute(fileUpload, userName);
-            model.addAttribute("fileSuccess", true);
+            return new ModelAndView("redirect:/home");
         }catch (final Exception exception){
-            model.addAttribute("fileError", true);
-            model.addAttribute("fileErrorMessage", exception.getMessage());
+            return new ModelAndView( "redirect:/home?errorMessage=" + exception.getMessage());
         }
-
-        return "home";
     }
 
     @GetMapping
@@ -77,7 +78,7 @@ public class FileController {
                 .body(resource);
     }
 
-    @GetMapping(value = "/{fileId}/delete")//DeleteMapping
+    @RequestMapping(value = "/{fileId}/delete")//DeleteMapping
     public String deleteFile(@PathVariable("fileId") final Integer fileId){
         deleteFileService.execute(fileId);
         return "redirect:/home";

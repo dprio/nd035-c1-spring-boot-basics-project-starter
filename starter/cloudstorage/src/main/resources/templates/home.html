@@ -9,6 +9,10 @@
         <title>Home</title>
     </head>
     <body class="p-3 mb-2 bg-light text-black">
+        <div class="alert alert-danger" th:if="${errorMessage}">
+            <span th:text="${errorMessage}"> Error message </span>
+            <meta http-equiv="refresh" content="2; URL = 'http://localhost:8080/home'">
+        </div>
         <div class="container">
             <div id="logoutDiv">
                 <form action="#" method="POST" th:action="@{/logout}">
@@ -37,11 +41,6 @@
                                     <div class="col-sm-4">
                                         <button type="submit" class="btn btn-dark">Upload</button>
                                     </div>
-                                    <div class="alert alert-danger" th:if="${fileError}">
-                                        <span th:text="${fileErrorMessage}"> Error message </span>
-                                        <meta http-equiv="refresh" content="2; URL = 'http://localhost:8080/home'">
-                                    </div>
-                                    <meta th:if="${fileSuccess}" http-equiv="refresh" content="0; URL = 'http://localhost:8080/home'">
                                 </div>
                             </div>
                         </form>
