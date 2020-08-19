@@ -6,7 +6,6 @@ import com.udacity.jwdnd.course1.cloudstorage.services.credential.DeleteCredenti
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.UpdateCredentialService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
