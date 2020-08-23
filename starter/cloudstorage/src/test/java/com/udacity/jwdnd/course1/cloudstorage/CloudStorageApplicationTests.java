@@ -96,11 +96,11 @@ class CloudStorageApplicationTests {
 		homePage.setNoteTitle("NoteTitle");
 		homePage.setNoteDescription("NoteDescription");
 		homePage.submitNotesModal();
-		Assertions.assertEquals("Home", driver.getTitle());
 		TimeUnit.SECONDS.sleep(1L);
+		Assertions.assertEquals("Result", driver.getTitle());
 
 		//####### VERIFYING NOTE CREATION #########
-		homePage.clickNotesTab();
+		driver.findElement(By.id("successLink")).click();
 		TimeUnit.SECONDS.sleep(1L);
 
 		String title = driver.findElement(
@@ -118,11 +118,11 @@ class CloudStorageApplicationTests {
 
 		homePage.setNoteTitle("NoteTitle2");
 		homePage.submitNotesModal();
-		Assertions.assertEquals("Home", driver.getTitle());
 		TimeUnit.SECONDS.sleep(1L);
+		Assertions.assertEquals("Result", driver.getTitle());
 
 		//####### VERIFYING EDITION #########
-		homePage.clickNotesTab();
+		driver.findElement(By.id("successLink")).click();
 		TimeUnit.SECONDS.sleep(1L);
 
 		title = driver.findElement(
@@ -139,7 +139,7 @@ class CloudStorageApplicationTests {
 		TimeUnit.SECONDS.sleep(1L);
 
 		//####### VERIFYING DELETION #########
-		homePage.clickNotesTab();
+		driver.findElement(By.id("successLink")).click();
 		TimeUnit.SECONDS.sleep(1L);
 
 		Assertions.assertThrows(NoSuchElementException.class,() -> driver.findElement(
@@ -166,11 +166,10 @@ class CloudStorageApplicationTests {
 		homePage.setModalCredentialUsername("Username");
 		homePage.setModalCredentialPassword("Password");
 		homePage.submitCredentialsModal();
-		Assertions.assertEquals("Home", driver.getTitle());
 		TimeUnit.SECONDS.sleep(1L);
 
 		//####### VERIFYING CREDENTIAL CREATION #########
-		homePage.clickCredentialTab();
+		driver.findElement(By.id("successLink")).click();
 		TimeUnit.SECONDS.sleep(1L);
 
 		String url = driver.findElement(
@@ -196,7 +195,7 @@ class CloudStorageApplicationTests {
 		TimeUnit.SECONDS.sleep(1L);
 
 		//####### VERIFYING EDITION #########
-		homePage.clickCredentialTab();
+		driver.findElement(By.id("successLink")).click();
 		TimeUnit.SECONDS.sleep(1L);
 
 		url = driver.findElement(
@@ -217,7 +216,7 @@ class CloudStorageApplicationTests {
 		TimeUnit.SECONDS.sleep(1L);
 
 		//####### VERIFYING DELETION #########
-		homePage.clickCredentialTab();
+		driver.findElement(By.id("successLink")).click();
 		TimeUnit.SECONDS.sleep(1L);
 
 		Assertions.assertThrows(NoSuchElementException.class,() -> driver.findElement(
