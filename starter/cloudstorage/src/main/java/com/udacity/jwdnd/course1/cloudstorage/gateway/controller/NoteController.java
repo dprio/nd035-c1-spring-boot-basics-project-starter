@@ -43,9 +43,9 @@ public class NoteController {
             }else{
                 updateNoteService.execute(noteRequest.toNoteDomain(), userName);
             }
-            return new ModelAndView("redirect:/home");
+            return new ModelAndView("redirect:/result?success=true&redirect=/home?note=true");
         } catch (final Exception ex){
-            return new ModelAndView("redirect:/home?errorMessage=" + ex.getMessage());
+            return new ModelAndView( "redirect:/result?redirect=/home?note=true&errorMessage=" + ex.getMessage());
         }
     }
 
@@ -60,10 +60,10 @@ public class NoteController {
     }
 
     @RequestMapping(value = "/{noteId}/delete")
-    public String deleteNote(final Authentication authentication, final @PathVariable("noteId") int noteId){
+    public ModelAndView deleteNote(final Authentication authentication, final @PathVariable("noteId") int noteId){
         final String userName = authentication.getPrincipal().toString();
 
         deleteNoteService.execute(noteId, userName);
-        return "redirect:/home";
+        return new ModelAndView("redirect:/result?success=true&redirect=/home?note=true");
     }
 }

@@ -48,9 +48,9 @@ public class FileController {
 
         try {
             uploadFileService.execute(fileUpload, userName);
-            return new ModelAndView("redirect:/result?success=true&redirect=/home");
+            return new ModelAndView("redirect:/result?success=true&redirect=/home?file=true");
         }catch (final Exception exception){
-            return new ModelAndView( "redirect:/result?redirect=/home&errorMessage=" + exception.getMessage());
+            return new ModelAndView( "redirect:/result?redirect=/home?file=true&errorMessage=" + exception.getMessage());
         }
     }
 
@@ -78,9 +78,9 @@ public class FileController {
     }
 
     @RequestMapping(value = "/{fileId}/delete")//DeleteMapping
-    public String deleteFile(@PathVariable("fileId") final Integer fileId){
+    public ModelAndView deleteFile(@PathVariable("fileId") final Integer fileId){
         deleteFileService.execute(fileId);
-        return "redirect:/home";
+        return new ModelAndView("redirect:/result?success=true&redirect=/home?file=true");
     }
 
     @GetMapping("/result")

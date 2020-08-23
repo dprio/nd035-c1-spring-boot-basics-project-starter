@@ -35,19 +35,19 @@ public class CredentialController {
             }else {
                 updateCredentialService.execute(credentialRequest.toCredentialDomain(), userName);
             }
-            return new ModelAndView("redirect:/home");
+            return new ModelAndView("redirect:/result?success=true&redirect=/home?credential=true");
         } catch (final Exception ex){
-            return new ModelAndView("redirect:/home?errorMessage="+ex.getMessage());
+            return new ModelAndView( "redirect:/result?redirect=/home?credential=true&errorMessage=" + ex.getMessage());
         }
     }
 
     @RequestMapping(value = "/{credentialId}/delete")
-    public String deleteCredential(final Authentication authentication, final @PathVariable("credentialId") int credentialId){
+    public ModelAndView deleteCredential(final Authentication authentication, final @PathVariable("credentialId") int credentialId){
         final String userName = authentication.getPrincipal().toString();
 
         deleteCredentialService.execute(credentialId, userName);
 
-        return "redirect:/home";
+        return new ModelAndView("redirect:/result?success=true&redirect=/home?credential=true");
     }
 
 }

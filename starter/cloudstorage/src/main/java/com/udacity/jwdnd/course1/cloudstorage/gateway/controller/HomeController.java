@@ -35,7 +35,10 @@ public class HomeController {
     public String getHome(
             final Authentication authentication,
             final Model model,
-            final @RequestParam(required = false) String errorMessage){
+            final @RequestParam(required = false) String errorMessage,
+            @RequestParam(required = false) boolean file,
+            @RequestParam(required = false) boolean note,
+            @RequestParam(required = false) boolean credential){
         final String userName = authentication.getPrincipal().toString();
 
         model.addAttribute("errorMessage", errorMessage);
@@ -48,6 +51,13 @@ public class HomeController {
 
         final List<CredentialRequest> credentialList = credentialRequestConverter.convert(findCredentialsService.execute(userName));
         model.addAttribute("credentialList", credentialList);
+
+        if(!file && !note && !credential){
+            file = true;
+        }
+        model.addAttribute("file", file);
+        model.addAttribute("note", note);
+        model.addAttribute("credential", credential);
 
         return "home";
     }
