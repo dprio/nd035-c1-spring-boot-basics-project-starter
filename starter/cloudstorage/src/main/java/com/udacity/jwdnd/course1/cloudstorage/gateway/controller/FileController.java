@@ -5,6 +5,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.file.DeleteFileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.DownloadFileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.FindFilesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.UploadFileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.http.HttpHeaders;
@@ -28,17 +29,15 @@ import java.util.List;
 @RequestMapping("/files")
 public class FileController {
 
-    private final UploadFileService uploadFileService;
-    private final FindFilesService findFilesService;
-    private final DownloadFileService downloadFileService;
-    private final DeleteFileService deleteFileService;
+    @Autowired
+    private UploadFileService uploadFileService;
+    @Autowired
+    private FindFilesService findFilesService;
+    @Autowired
+    private DownloadFileService downloadFileService;
+    @Autowired
+    private DeleteFileService deleteFileService;
 
-    public FileController(UploadFileService uploadFileService, FindFilesService findFilesService, DownloadFileService downloadFileService, DeleteFileService deleteFileService) {
-        this.uploadFileService = uploadFileService;
-        this.findFilesService = findFilesService;
-        this.downloadFileService = downloadFileService;
-        this.deleteFileService = deleteFileService;
-    }
 
     @PostMapping(
             value = "/upload",

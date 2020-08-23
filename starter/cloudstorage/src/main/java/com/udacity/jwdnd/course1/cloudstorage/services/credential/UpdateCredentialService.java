@@ -5,20 +5,21 @@ import com.udacity.jwdnd.course1.cloudstorage.domain.User;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.h2.CredentialGateway;
 import com.udacity.jwdnd.course1.cloudstorage.gateway.h2.UserGateway;
 import com.udacity.jwdnd.course1.cloudstorage.services.EncryptionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UpdateCredentialService {
 
-    private final CredentialGateway credentialGateway;
-    private final UserGateway userGateway;
-    private final EncryptionService encryptionService;
+    @Autowired
+    private CredentialGateway credentialGateway;
 
-    public UpdateCredentialService(CredentialGateway credentialGateway, UserGateway userGateway, EncryptionService encryptionService) {
-        this.credentialGateway = credentialGateway;
-        this.userGateway = userGateway;
-        this.encryptionService = encryptionService;
-    }
+    @Autowired
+    private UserGateway userGateway;
+
+    @Autowired
+    private EncryptionService encryptionService;
+
 
     public void execute(final Credential credential, final String userName){
         final int userId = userGateway.findUserByUserName(userName)

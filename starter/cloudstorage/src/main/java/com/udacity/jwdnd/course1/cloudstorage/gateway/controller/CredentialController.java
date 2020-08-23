@@ -4,6 +4,7 @@ import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.Credent
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.CreateCredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.DeleteCredentialService;
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.UpdateCredentialService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,15 +18,13 @@ import java.util.Objects;
 @RequestMapping("/credentials")
 public class CredentialController {
 
-    private final CreateCredentialService createCredentialService;
-    private final UpdateCredentialService updateCredentialService;
-    private final DeleteCredentialService deleteCredentialService;
+    @Autowired
+    private CreateCredentialService createCredentialService;
+    @Autowired
+    private UpdateCredentialService updateCredentialService;
+    @Autowired
+    private DeleteCredentialService deleteCredentialService;
 
-    public CredentialController(CreateCredentialService createCredentialService, UpdateCredentialService updateCredentialService, DeleteCredentialService deleteCredentialService) {
-        this.createCredentialService = createCredentialService;
-        this.updateCredentialService = updateCredentialService;
-        this.deleteCredentialService = deleteCredentialService;
-    }
 
     @PostMapping(value = "/create")
     public ModelAndView createCredential(final Authentication authentication, final CredentialRequest credentialRequest){

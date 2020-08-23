@@ -2,6 +2,7 @@ package com.udacity.jwdnd.course1.cloudstorage.gateway.controller;
 
 import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.SignUpRequest;
 import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,11 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/signup")
 public class SignUpController {
 
-    private final UserService userService;
+    @Autowired
+    private  UserService userService;
 
-    public SignUpController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public String getSignup(){

@@ -7,6 +7,7 @@ import com.udacity.jwdnd.course1.cloudstorage.gateway.controller.request.Credent
 import com.udacity.jwdnd.course1.cloudstorage.services.credential.FindCredentialsService;
 import com.udacity.jwdnd.course1.cloudstorage.services.file.FindFilesService;
 import com.udacity.jwdnd.course1.cloudstorage.services.note.FindNotesService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,19 +21,15 @@ import java.util.List;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final FindFilesService findFilesService;
-    private final FindNotesService findNotesService;
-    private final FindCredentialsService findCredentialsService;
+    @Autowired
+    private FindFilesService findFilesService;
+    @Autowired
+    private FindNotesService findNotesService;
+    @Autowired
+    private FindCredentialsService findCredentialsService;
+    @Autowired
+    private CredentialRequestConverter credentialRequestConverter;
 
-    private final CredentialRequestConverter credentialRequestConverter;
-
-
-    public HomeController(FindFilesService findFilesService, FindNotesService findNotesService, FindCredentialsService findCredentialsService, CredentialRequestConverter credentialRequestConverter) {
-        this.findFilesService = findFilesService;
-        this.findNotesService = findNotesService;
-        this.findCredentialsService = findCredentialsService;
-        this.credentialRequestConverter = credentialRequestConverter;
-    }
 
     @GetMapping
     public String getHome(
